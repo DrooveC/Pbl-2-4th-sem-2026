@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PBL Presentation | 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { background-color: #020617; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gradient-text { background: linear-gradient(90deg, #60a5fa, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* CONNECTING LINES FOR DIAGRAMS */
+        .connector-line { position: absolute; background: #334155; z-index: 0; }
+        
+        /* ANIMATED FLOW LINE */
+        @keyframes flow {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+        .flow-line {
+            background: linear-gradient(90deg, transparent 50%, rgba(96, 165, 250, 0.5) 50%);
+            background-size: 20px 20px;
+            animation: flow 1s linear infinite;
+        }
+
+        /* TIMER UI - FIXED CONTRAST */
+        #timerContainer { background: #ffffff; color: #020617; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border: 3px solid #3b82f6; z-index: 1000; }
+        @keyframes flicker { 0%, 100% { background-color: #ffffff; } 50% { background-color: #fca5a5; } }
+        .timer-warning { animation: flicker 1s infinite; border: 3px solid #ef4444 !important; color: #b91c1c !important; }
+        .timer-stop { background-color: #991b1b !important; color: #ffffff !important; border: 3px solid #f87171 !important; animation: none; }
+    </style>
+</head>
+<body>
+
+    <div id="timerContainer" class="fixed bottom-10 right-10 px-8 py-4 rounded-3xl flex items-center gap-4 transition-all">
+        <i class="fas fa-hourglass-start text-blue-600 text-2xl" id="timerIcon"></i>
+        <span id="displayTime" class="text-4xl font-black font-mono tracking-tighter">00:00</span>
+    </div>
+
+    <nav class="fixed w-full z-50 glass border-b border-slate-800/50 px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <div class="bg-white p-1 rounded flex items-center justify-center shadow-md" style="height: 48px; width: 48px;">
+                <img src="mujlogo.jpg" alt="MUJ" class="h-full w-auto object-contain" onerror="this.src='https://via.placeholder.com/50?text=MUJ'">
+            </div>
+            <div class="flex flex-col text-left">
+                <span class="text-xl font-black text-white leading-none uppercase tracking-tighter">PBL <span class="text-blue-500 italic">2026</span></span>
+                <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dept. of Computer Science & Engineering</span>
+            </div>
+        </div>
+        <div class="hidden md:flex gap-4 lg:gap-8 text-[10px] lg:text-[11px] uppercase tracking-widest font-bold opacity-70">
+            <a href="#contents" class="hover:text-blue-400 transition">Contents</a>
+            <a href="#introduction" class="hover:text-fuchsia-400 transition">Intro</a>
+            <a href="#methodology" class="hover:text-emerald-400 transition">Method</a>
+            <a href="#outcomes" class="hover:text-indigo-400 transition">Outcomes</a>
+            <a href="#references" class="hover:text-pink-400 transition">Refs</a>
+            <a href="#team" class="hover:text-blue-400 transition">Team</a>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 pt-48 pb-32 space-y-32">
+        
+        <section class="text-center">
+            <div class="inline-block px-4 py-1 border border-slate-800 rounded-full text-slate-500 text-[10px] font-mono mb-6 uppercase tracking-widest">ID: 2427030723</div>
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 uppercase leading-tight tracking-tighter"><span class="gradient-text">Intrusion Detection</span><br><span class="text-white">Using AI/ML</span></h1>
+            <p class="text-slate-400 max-w-2xl mx-auto italic text-lg leading-relaxed border-l-2 border-blue-500/30 pl-6 text-left">
+                "An Intrusion Detection System (IDS) is a security mechanism that monitors network or host activity to detect unauthorized access, misuse, or anomalies."
+            </p>
+        </section>
+
+        <!-- TABLE OF CONTENTS -->
+        <section id="contents">
+            <h2 class="text-4xl font-black mb-16 uppercase tracking-tight text-center">Table of <span class="gradient-text">Contents</span></h2>
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <!-- Illustration Area -->
+                <div class="hidden md:flex justify-center items-center relative h-full">
+                    <div class="absolute bg-blue-500/10 blur-[80px] w-64 h-64 rounded-full"></div>
+                    <div class="relative z-10 text-center">
+                        <i class="fas fa-user-secret text-[14rem] text-slate-700 drop-shadow-2xl"></i>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16">
+                            <i class="fas fa-shield-halved text-8xl text-blue-600 border-8 border-[#020617] rounded-full bg-[#020617]"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Table of Contents List -->
+                <div class="space-y-4">
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-blue-500/50 hover:border-blue-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-bold text-white text-xs font-mono">1</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">Introduction</span></div>
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-blue-500/50 hover:border-blue-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-bold text-white text-xs font-mono">2</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">Literature Review</span></div>
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-purple-500/50 hover:border-purple-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center font-bold text-white text-xs font-mono">3</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">Problem Statement</span></div>
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-purple-500/50 hover:border-purple-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center font-bold text-white text-xs font-mono">4</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">Proposed Solutions</span></div>
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-pink-500/50 hover:border-pink-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-600 to-orange-500 flex items-center justify-center font-bold text-white text-xs font-mono">5</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">Objectives</span></div>
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-orange-500/50 hover:border-orange-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center font-bold text-white text-xs font-mono">6</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">Methodology</span></div>
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-yellow-500/50 hover:border-yellow-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-500 to-emerald-500 flex items-center justify-center font-bold text-white text-xs font-mono">7</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">Results</span></div>
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-indigo-500/50 hover:border-indigo-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center font-bold text-white text-xs font-mono">8</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">Outcomes</span></div>
+                    <!-- Item 9: References (New) -->
+                    <div class="glass p-4 rounded-xl flex items-center hover:bg-white/5 transition border-l-4 border-pink-500/50 hover:border-pink-500"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-red-500 flex items-center justify-center font-bold text-white text-xs font-mono">9</div><span class="ml-4 text-sm font-bold tracking-widest text-slate-300 uppercase">References</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTRODUCTION SECTION -->
+        <section id="introduction" class="min-h-[50vh] flex items-center justify-center">
+            <div class="glass p-12 rounded-[3rem] border-t-4 border-fuchsia-500 w-full grid md:grid-cols-2 gap-12 items-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-fuchsia-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+                <div class="relative flex justify-center items-center group">
+                     <i class="fas fa-desktop text-[12rem] text-slate-700 transition-colors duration-500 group-hover:text-slate-600"></i>
+                     <div class="absolute w-[9.5rem] h-[6rem] bg-gradient-to-br from-purple-900 to-slate-900 -mt-8 rounded opacity-80"></div>
+                     <div class="absolute -mt-8 bg-gradient-to-br from-fuchsia-500 to-purple-600 p-5 rounded-2xl shadow-2xl shadow-fuchsia-500/40 transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-lock text-4xl text-white"></i>
+                     </div>
+                </div>
+                <div class="z-10">
+                    <h2 class="text-6xl md:text-7xl font-black uppercase tracking-tight text-white mb-6">Intro<span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-purple-400">duction</span></h2>
+                    <div class="h-2 w-32 bg-gradient-to-r from-fuchsia-500 to-purple-600 rounded-full mb-8"></div>
+                    <p class="text-slate-400 text-lg italic border-l-2 border-fuchsia-500/50 pl-6">
+                        "It acts like a burglar alarm for your computer network — watching for signs of attacks or policy violations."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTRODUCTION DETAILS -->
+        <section class="space-y-20">
+            <div class="text-center max-w-3xl mx-auto">
+                <h3 class="text-3xl font-black uppercase tracking-widest mb-12">IDS - It's Main <span class="text-purple-400">Objectives</span></h3>
+                <div class="space-y-6 text-left">
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-6 border-l-4 border-indigo-500 transform hover:scale-[1.02] transition duration-300">
+                        <div class="bg-indigo-500/20 p-4 rounded-xl text-indigo-400"><i class="fas fa-user-secret text-3xl"></i></div>
+                        <div><h4 class="text-xl font-bold text-white mb-1">To <span class="text-indigo-400">detect</span> suspicious activities</h4><p class="text-slate-400 text-sm">Monitors for policy violations and unauthorized access attempts.</p></div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-6 border-l-4 border-purple-500 transform hover:scale-[1.02] transition duration-300">
+                        <div class="bg-purple-500/20 p-4 rounded-xl text-purple-400"><i class="fas fa-bell text-3xl"></i></div>
+                        <div><h4 class="text-xl font-bold text-white mb-1">To <span class="text-purple-400">alert</span> system administrators</h4><p class="text-slate-400 text-sm">Provides real-time notifications to IT security teams for immediate action.</p></div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-6 border-l-4 border-pink-500 transform hover:scale-[1.02] transition duration-300">
+                        <div class="bg-pink-500/20 p-4 rounded-xl text-pink-400"><i class="fas fa-shield-virus text-3xl"></i></div>
+                        <div><h4 class="text-xl font-bold text-white mb-1">To <span class="text-pink-400">help prevent</span> data breaches</h4><p class="text-slate-400 text-sm">Stops malware spread and insider abuse by identifying threats early.</p></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- IDS vs IPS & DETECTION METHODS -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass p-8 rounded-3xl border-l-4 border-purple-500 hover:bg-white/5 transition">
+                    <h3 class="text-xl font-bold text-purple-400 uppercase tracking-widest mb-6 border-b border-purple-500/30 pb-2">IDS vs IPS</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4"><div class="bg-purple-500/20 p-2 rounded text-purple-400"><i class="fas fa-eye"></i></div><div><strong class="text-white block">IDS (Intrusion Detection System)</strong><span class="text-slate-400 text-sm">Passive monitoring. Detects attacks and alerts the admin.</span></div></div>
+                        <div class="flex items-start gap-4"><div class="bg-purple-500/20 p-2 rounded text-purple-400"><i class="fas fa-hand-paper"></i></div><div><strong class="text-white block">IPS (Intrusion Prevention System)</strong><span class="text-slate-400 text-sm">Active protection. Detects attacks and blocks traffic.</span></div></div>
+                    </div>
+                </div>
+                <div class="glass p-8 rounded-3xl border-l-4 border-pink-500 hover:bg-white/5 transition">
+                    <h3 class="text-xl font-bold text-pink-400 uppercase tracking-widest mb-6 border-b border-pink-500/30 pb-2">Detection Methods</h3>
+                    <ul class="space-y-4 text-sm text-slate-300">
+                        <li class="flex items-center gap-3"><i class="fas fa-fingerprint text-pink-500"></i><span><strong class="text-white">Signature-based:</strong> Matches traffic against known patterns.</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-chart-line text-pink-500"></i><span><strong class="text-white">Anomaly-based:</strong> Flags deviations from normal behavior.</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-layer-group text-pink-500"></i><span><strong class="text-white">Hybrid:</strong> Combines both methods.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+             <!-- TYPES OF IDS DIAGRAM -->
+            <div class="glass p-12 rounded-[3rem] relative overflow-hidden">
+                <div class="absolute inset-0 bg-blue-900/10 opacity-30 pattern-grid-lg"></div>
+                <h3 class="text-3xl font-black uppercase tracking-widest mb-16 text-center relative z-10">Types of <span class="text-blue-400">IDS</span></h3>
+                <div class="relative z-10 grid md:grid-cols-3 gap-8 items-center justify-items-center">
+                    <div class="space-y-16 flex flex-col items-end">
+                         <div class="text-right group relative">
+                             <div class="flex items-center gap-4 justify-end mb-2"><h4 class="text-lg font-bold text-white">Distributed IDS (DIDS)</h4><div class="bg-pink-500/20 p-3 rounded-full text-pink-400 border border-pink-500/30"><i class="fas fa-network-wired"></i></div></div>
+                             <p class="text-xs text-slate-400 max-w-[200px] ml-auto">Multiple sensors across network, centrally managed.</p>
+                             <div class="hidden md:block absolute top-1/2 -right-8 w-8 h-0.5 bg-pink-500/30"></div>
+                         </div>
+                         <div class="text-right group relative">
+                            <div class="flex items-center gap-4 justify-end mb-2"><h4 class="text-lg font-bold text-white">Hybrid IDS</h4><div class="bg-purple-500/20 p-3 rounded-full text-purple-400 border border-purple-500/30"><i class="fas fa-cogs"></i></div></div>
+                            <p class="text-xs text-slate-400 max-w-[200px] ml-auto">Combines both network and host analysis.</p>
+                            <div class="hidden md:block absolute top-1/2 -right-8 w-8 h-0.5 bg-purple-500/30"></div>
+                        </div>
+                    </div>
+                    <div class="relative w-64 h-48 bg-slate-800 rounded-xl border-4 border-slate-700 shadow-2xl flex items-center justify-center overflow-hidden transform hover:scale-105 transition">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 to-slate-900 opacity-80"></div>
+                        <i class="fas fa-shield-alt text-8xl text-indigo-500 relative z-10 drop-shadow-lg"></i>
+                        <div class="absolute bottom-[-20px] left-0 right-0 h-10 bg-slate-900"></div>
+                    </div>
+                    <div class="space-y-16 flex flex-col items-start">
+                        <div class="text-left group relative">
+                            <div class="flex items-center gap-4 mb-2"><div class="bg-blue-500/20 p-3 rounded-full text-blue-400 border border-blue-500/30"><i class="fas fa-cloud"></i></div><h4 class="text-lg font-bold text-white">Network-based (NIDS)</h4></div>
+                            <p class="text-xs text-slate-400 max-w-[200px]">Monitors entire network traffic (packets, flows).</p>
+                            <div class="hidden md:block absolute top-1/2 -left-8 w-8 h-0.5 bg-blue-500/30"></div>
+                        </div>
+                        <div class="text-left group relative">
+                           <div class="flex items-center gap-4 mb-2"><div class="bg-indigo-500/20 p-3 rounded-full text-indigo-400 border border-indigo-500/30"><i class="fas fa-eye"></i></div><h4 class="text-lg font-bold text-white">Host-based (HIDS)</h4></div>
+                           <p class="text-xs text-slate-400 max-w-[200px]">Monitors logs, file integrity, and processes.</p>
+                           <div class="hidden md:block absolute top-1/2 -left-8 w-8 h-0.5 bg-indigo-500/30"></div>
+                       </div>
+                   </div>
+                </div>
+            </div>
+
+            <!-- SYSTEM OVERVIEW -->
+            <div class="glass p-10 rounded-[2.5rem] border border-slate-800 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+                <h3 class="text-3xl font-black mb-12 text-center uppercase tracking-tight relative z-10">System <span class="gradient-text">Architecture</span></h3>
+                <div class="grid md:grid-cols-2 gap-16 relative z-10">
+                    <div class="space-y-8">
+                         <div>
+                            <h4 class="text-lg font-bold text-white mb-3 flex items-center"><i class="fas fa-layer-group text-blue-500 mr-3"></i> Core Components</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-mono text-blue-200 border border-slate-700">Data Collection</span>
+                                <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-mono text-blue-200 border border-slate-700">Preprocessing</span>
+                                <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-mono text-blue-200 border border-slate-700">Detection Engine</span>
+                                <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-mono text-blue-200 border border-slate-700">Alert System</span>
+                            </div>
+                         </div>
+                         <div class="bg-gradient-to-r from-purple-900/40 to-transparent p-4 rounded-xl border-l-2 border-purple-500">
+                            <h4 class="text-lg font-bold text-white mb-2 flex items-center"><i class="fas fa-brain text-purple-400 mr-3"></i> AIML in IDS</h4>
+                            <p class="text-sm text-slate-400 mb-3 leading-relaxed">Learns normal patterns to detect unknown attacks. Reduces false positives and adapts to evolving threats.</p>
+                            <div class="text-xs text-purple-300 font-mono"><i class="fas fa-code-branch mr-2"></i>Models: Random Forest, Autoencoder, LSTM</div>
+                         </div>
+                    </div>
+                     <div class="space-y-8 border-l border-slate-800 pl-0 md:pl-12">
+                         <div>
+                            <h4 class="text-lg font-bold text-white mb-4 flex items-center"><i class="fas fa-exclamation-triangle text-orange-500 mr-3"></i> Challenges</h4>
+                            <ul class="space-y-2 text-sm text-slate-400">
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div> High False Positives</li>
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div> Encrypted or large-scale data</li>
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div> Balancing speed & accuracy</li>
+                            </ul>
+                         </div>
+                         <div>
+                            <h4 class="text-lg font-bold text-white mb-4 flex items-center"><i class="fas fa-chart-line text-green-500 mr-3"></i> Key Metrics</h4>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800 text-center"><span class="text-xs text-slate-500 uppercase block">Metric 01</span><span class="text-green-400 font-bold text-sm">Detection Rate</span></div>
+                                <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800 text-center"><span class="text-xs text-slate-500 uppercase block">Metric 02</span><span class="text-green-400 font-bold text-sm">Precision</span></div>
+                                <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800 text-center"><span class="text-xs text-slate-500 uppercase block">Metric 03</span><span class="text-green-400 font-bold text-sm">F1-Score</span></div>
+                                <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800 text-center"><span class="text-xs text-slate-500 uppercase block">Metric 04</span><span class="text-red-400 font-bold text-sm">False Positive Rate</span></div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIT REVIEW TITLE SLIDE -->
+        <section id="lit-review" class="flex flex-col items-center justify-center py-20 border-t border-slate-900/50">
+            <div class="relative mb-10">
+                <div class="absolute inset-0 bg-purple-500 blur-[60px] opacity-20 rounded-full"></div>
+                <i class="fas fa-book-reader text-8xl text-slate-200 relative z-10"></i>
+                <div class="absolute -bottom-4 -right-4 bg-purple-600 px-4 py-2 rounded-lg border border-purple-400 z-20">
+                    <i class="fas fa-search text-white"></i>
+                </div>
+            </div>
+            <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tight text-center">Literature <span class="text-purple-500">Review</span></h2>
+        </section>
+
+        <!-- TRADITIONAL vs AIML SECTIONS & COMPARISON -->
+        <section class="space-y-32">
+            <!-- TRADITIONAL IDS -->
+            <section class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1 relative flex justify-center">
+                    <div class="absolute inset-0 bg-red-500/5 blur-[80px] rounded-full"></div>
+                    <div class="glass p-10 rounded-[3rem] border-b-4 border-red-500/50 text-center w-full max-w-sm relative z-10">
+                        <i class="fas fa-server text-6xl text-slate-600 mb-6"></i>
+                        <h3 class="text-xl font-bold text-slate-300 uppercase tracking-widest mb-2">Traditional IDS</h3>
+                        <p class="text-xs text-slate-500 font-mono">Legacy Systems</p>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 space-y-8">
+                    <h3 class="text-3xl font-bold uppercase tracking-wide border-l-4 border-slate-700 pl-6">Methods & <span class="text-red-400">Limitations</span></h3>
+                    <div class="glass p-6 rounded-2xl border-l-2 border-slate-600">
+                        <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3"><i class="fas fa-cog mr-2"></i> How it Worked</h4>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>• Used <strong>signature-based</strong> or rule-based detection</li>
+                            <li>• Relied on fixed thresholds (e.g., Bandwidth > X)</li>
+                            <li>• <span class="text-slate-500">Tools: Snort, Suricata, OSSEC</span></li>
+                        </ul>
+                    </div>
+                    <div class="glass p-6 rounded-2xl border-l-2 border-red-500 bg-red-900/10">
+                        <h4 class="text-sm font-bold text-red-400 uppercase tracking-widest mb-3"><i class="fas fa-exclamation-circle mr-2"></i> Problems Faced</h4>
+                        <ul class="space-y-2 text-sm text-red-100/80">
+                            <li>• Could only detect <strong>known attacks</strong> (No Zero-Day)</li>
+                            <li>• Frequent false positives/negatives</li>
+                            <li>• Required constant manual updates of rules</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AIML IDS -->
+            <section class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <h3 class="text-3xl font-bold uppercase tracking-wide border-l-4 border-emerald-500 pl-6 text-right md:text-left">AIML-Based <span class="text-emerald-400">Innovation</span></h3>
+                    <div class="glass p-6 rounded-2xl border-l-2 border-emerald-500">
+                        <h4 class="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-3"><i class="fas fa-brain mr-2"></i> How it Works</h4>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>• Uses <strong>Machine Learning & Deep Learning</strong></li>
+                            <li>• Learns normal patterns → Flags anomalies</li>
+                            <li>• Models: <span class="font-mono text-emerald-300">Random Forest, LSTM, GNN</span></li>
+                        </ul>
+                    </div>
+                    <div class="glass p-6 rounded-2xl border-l-2 border-slate-600 bg-emerald-900/5">
+                        <h4 class="text-sm font-bold text-slate-300 uppercase tracking-widest mb-3"><i class="fas fa-rocket mr-2"></i> Key Advantages</h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Detects unknown & evolving attacks</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Adaptive learning (reduces manual tuning)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="relative flex justify-center">
+                    <div class="absolute inset-0 bg-emerald-500/10 blur-[80px] rounded-full"></div>
+                    <div class="glass p-10 rounded-[3rem] border-r-4 border-emerald-500/50 text-center w-full max-w-sm relative z-10">
+                        <i class="fas fa-robot text-6xl text-emerald-400 mb-6"></i>
+                        <h3 class="text-xl font-bold text-white uppercase tracking-widest mb-2">Smart IDS</h3>
+                        <p class="text-xs text-emerald-500 font-mono">Next-Gen Security</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPARISON TABLE -->
+            <section class="glass p-8 md:p-12 rounded-[3rem] border border-slate-700">
+                <h3 class="text-2xl md:text-3xl font-black text-center uppercase tracking-tight mb-12">Traditional <span class="text-slate-600 mx-4">VS</span> <span class="gradient-text">AIML-Based</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 flex justify-between items-center hover:border-slate-600 transition"><span class="text-xs font-bold text-slate-400 w-1/2">Predefined rules & signatures</span><i class="fas fa-arrow-right text-slate-700 mx-2"></i><span class="text-xs font-bold text-emerald-400 w-1/2 text-right">Behavioral patterns (Auto)</span></div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 flex justify-between items-center hover:border-slate-600 transition"><span class="text-xs font-bold text-slate-400 w-1/2">Detects only known attacks</span><i class="fas fa-arrow-right text-slate-700 mx-2"></i><span class="text-xs font-bold text-emerald-400 w-1/2 text-right">Unknown & evolving threats</span></div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 flex justify-between items-center hover:border-slate-600 transition"><span class="text-xs font-bold text-slate-400 w-1/2">Static (Frequent updates)</span><i class="fas fa-arrow-right text-slate-700 mx-2"></i><span class="text-xs font-bold text-emerald-400 w-1/2 text-right">Adaptive (Self-learning)</span></div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 flex justify-between items-center hover:border-slate-600 transition"><span class="text-xs font-bold text-red-400 w-1/2">Many false positives</span><i class="fas fa-arrow-right text-slate-700 mx-2"></i><span class="text-xs font-bold text-emerald-400 w-1/2 text-right">Fewer, smarter alerts</span></div>
+                </div>
+            </section>
+        </section>
+
+        <!-- PROBLEM STATEMENT TITLE SLIDE -->
+        <section id="problem-statement" class="min-h-[60vh] flex items-center justify-center relative border-t border-slate-900">
+            <div class="absolute inset-0 bg-[#020617]"></div>
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+            <div class="glass p-12 rounded-[3rem] w-full max-w-5xl grid md:grid-cols-5 gap-12 items-center relative z-10 border-l-4 border-slate-700">
+                <div class="md:col-span-2 relative flex justify-center items-center">
+                    <div class="relative w-full aspect-video bg-slate-800 rounded-xl border-8 border-slate-900 shadow-2xl flex items-center justify-center overflow-hidden">
+                         <div class="absolute inset-0 bg-slate-900 opacity-50"></div>
+                         <i class="fas fa-lock text-7xl text-white z-10"></i>
+                         <div class="absolute w-full h-full bg-gradient-to-t from-red-900/50 to-transparent"></div>
+                    </div>
+                    <div class="absolute -bottom-6 w-24 h-4 bg-slate-900 rounded-full"></div>
+                    <div class="absolute -bottom-6 w-8 h-8 bg-slate-900 rounded-full"></div>
+                </div>
+                <div class="md:col-span-3 text-left">
+                     <span class="inline-block px-3 py-1 bg-slate-800 text-slate-400 text-[10px] font-bold uppercase tracking-widest rounded-lg mb-4">Critical Analysis</span>
+                     <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tight text-white mb-6">Problem <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">Statement</span></h2>
+                     <p class="text-slate-400 text-lg leading-relaxed">
+                        Traditional security measures struggle to keep pace with sophisticated cyber threats. The reliance on manual updates and signature-based detection leaves networks vulnerable to zero-day attacks and generates an overwhelming volume of false alerts.
+                     </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROPOSED SOLUTIONS TITLE SLIDE -->
+        <section id="proposed-solutions" class="flex flex-col items-center justify-center py-20 border-t border-slate-900/50">
+            <div class="relative mb-10">
+                <div class="absolute inset-0 bg-blue-500 blur-[60px] opacity-20 rounded-full"></div>
+                <div class="relative z-10 bg-gradient-to-br from-slate-800 to-black p-8 rounded-3xl border border-slate-700 shadow-2xl">
+                    <i class="fas fa-shield-halved text-7xl text-blue-500"></i>
+                    <div class="absolute top-0 right-0 -mt-2 -mr-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full">AI</div>
+                </div>
+            </div>
+            <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tight text-center">Proposed <span class="text-blue-500">Solutions</span></h2>
+        </section>
+
+        <!-- ANOMALIES & DETECTION APPROACH -->
+        <section class="space-y-12">
+            <div class="text-center max-w-4xl mx-auto mb-16">
+                <h3 class="text-3xl font-black uppercase tracking-widest mb-4">Anomalies & Detection <span class="text-blue-400">Approach</span></h3>
+                <p class="text-slate-400"> comprehensive strategy targeting multiple layers of network activity using specialized AI models.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass p-6 rounded-2xl border-t-4 border-pink-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-pink-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-pink-400 text-xl"><i class="fas fa-chart-area"></i></div><h4 class="text-lg font-bold text-white mb-2">Traffic Volume</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• Statistical Baseline + ML</li><li>• Time-Series Prediction</li></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-purple-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-purple-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-purple-400 text-xl"><i class="fas fa-file-code"></i></div><h4 class="text-lg font-bold text-white mb-2">Protocol & Packet</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• Rule-Aided ML Detection</li><li>• Autoencoder-based Anomaly Detection</li></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-indigo-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-indigo-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-indigo-400 text-xl"><i class="fas fa-project-diagram"></i></div><h4 class="text-lg font-bold text-white mb-2">Connection Behavior</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• Behavior Modeling</li><li>• Graph Neural Networks (GNNs)</li></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-blue-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-blue-400 text-xl"><i class="fas fa-user-clock"></i></div><h4 class="text-lg font-bold text-white mb-2">User & Host Behavior</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• User Behavior Analytics (UEBA)</li><li>• Sequence Prediction (LSTM)</li></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-cyan-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-cyan-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-cyan-400 text-xl"><i class="fas fa-globe"></i></div><h4 class="text-lg font-bold text-white mb-2">DNS & Domain</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• Domain Classification</li><li>• Flow Anomaly Detection</li></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-emerald-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-emerald-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-emerald-400 text-xl"><i class="fas fa-ethernet"></i></div><h4 class="text-lg font-bold text-white mb-2">ARP & MAC-Layer</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• Supervised Classification</li><li>• Graph Analysis</li></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-green-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-green-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-green-400 text-xl"><i class="fas fa-window-maximize"></i></div><h4 class="text-lg font-bold text-white mb-2">Application-Level</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• Log-based NLP Models</li><li>• Web Traffic Classification</li></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-yellow-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-yellow-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-yellow-400 text-xl"><i class="fas fa-hourglass-half"></i></div><h4 class="text-lg font-bold text-white mb-2">Timing & Flow</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• Time-Series Forecasting</li><li>• Autoencoder / PCA</li></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-orange-500 hover:transform hover:-translate-y-2 transition duration-300">
+                    <div class="bg-orange-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-orange-400 text-xl"><i class="fas fa-route"></i></div><h4 class="text-lg font-bold text-white mb-2">Routing & Topology</h4><ul class="text-xs text-slate-400 space-y-1 font-mono"><li>• Graph Based Detection</li><li>• Sequence Prediction</li></ul>
+                </div>
+                 <div class="glass p-6 rounded-2xl border-t-4 border-white md:col-span-2 lg:col-span-3 bg-white/5 hover:bg-white/10 transition duration-300 flex flex-col md:flex-row items-center gap-6">
+                    <div class="bg-white/10 w-16 h-16 rounded-full flex items-center justify-center text-white text-3xl"><i class="fas fa-brain"></i></div>
+                    <div class="text-center md:text-left flex-1">
+                        <h4 class="text-xl font-bold text-white mb-2">Combined Multi-Feature Anomalies</h4>
+                        <p class="text-sm text-slate-400 mb-2">Hybrid IDS (AI Ensemble) combining Graph & Temporal Modeling.</p>
+                        <span class="inline-block px-3 py-1 bg-white/10 text-white text-xs font-mono rounded-full">Deep Reinforcement Learning (DRL)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OBJECTIVES TITLE SLIDE -->
+        <section id="objectives" class="flex flex-col items-center justify-center py-20 border-t border-slate-900/50">
+            <div class="relative mb-10">
+                <div class="absolute inset-0 bg-purple-500 blur-[60px] opacity-20 rounded-full"></div>
+                <i class="fas fa-bullseye text-8xl text-slate-200 relative z-10"></i>
+            </div>
+            <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tight text-center">Project <span class="text-purple-500">Objectives</span></h2>
+        </section>
+
+        <!-- MAIN OBJECTIVES -->
+        <section class="space-y-12">
+            <h3 class="text-2xl font-black uppercase tracking-widest text-center mb-8">Main Objectives of an <span class="gradient-text">AIML-Based IDS</span></h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass p-6 rounded-2xl text-center group hover:bg-purple-900/10 transition border border-purple-500/20"><div class="w-12 h-12 mx-auto bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-search"></i></div><h4 class="font-bold text-white mb-2 text-sm uppercase">Intelligent Threat Detection</h4><p class="text-xs text-slate-400 leading-relaxed">Identify known and <strong class="text-purple-300">zero-day attacks</strong> by learning behavioral patterns.</p></div>
+                <div class="glass p-6 rounded-2xl text-center group hover:bg-purple-900/10 transition border border-purple-500/20"><div class="w-12 h-12 mx-auto bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-sync-alt"></i></div><h4 class="font-bold text-white mb-2 text-sm uppercase">Adaptive Learning</h4><p class="text-xs text-slate-400 leading-relaxed">Continuously learn from <strong class="text-purple-300">new data</strong> to improve detection accuracy over time.</p></div>
+                <div class="glass p-6 rounded-2xl text-center group hover:bg-purple-900/10 transition border border-purple-500/20"><div class="w-12 h-12 mx-auto bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-bolt"></i></div><h4 class="font-bold text-white mb-2 text-sm uppercase">Real-Time Detection</h4><p class="text-xs text-slate-400 leading-relaxed">Analyze traffic and events <strong class="text-purple-300">instantly</strong> to detect intrusions as they happen.</p></div>
+                <div class="glass p-6 rounded-2xl text-center group hover:bg-purple-900/10 transition border border-purple-500/20"><div class="w-12 h-12 mx-auto bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-filter"></i></div><h4 class="font-bold text-white mb-2 text-sm uppercase">Reduced False Alerts</h4><p class="text-xs text-slate-400 leading-relaxed">Distinguish normal vs malicious activity to <strong class="text-purple-300">minimize false positives</strong>.</p></div>
+                <div class="glass p-6 rounded-2xl text-center group hover:bg-pink-900/10 transition border border-pink-500/20"><div class="w-12 h-12 mx-auto bg-pink-500/20 rounded-full flex items-center justify-center text-pink-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-users-cog"></i></div><h4 class="font-bold text-white mb-2 text-sm uppercase">Behavioral Analysis</h4><p class="text-xs text-slate-400 leading-relaxed">Model normal <strong class="text-pink-300">user/host behavior</strong> and flag deviations automatically.</p></div>
+                <div class="glass p-6 rounded-2xl text-center group hover:bg-pink-900/10 transition border border-pink-500/20"><div class="w-12 h-12 mx-auto bg-pink-500/20 rounded-full flex items-center justify-center text-pink-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-crystal-ball"></i></div><h4 class="font-bold text-white mb-2 text-sm uppercase">Predictive Security</h4><p class="text-xs text-slate-400 leading-relaxed">Prevent attacks by predicting <strong class="text-pink-300">risk patterns</strong> before exploitation.</p></div>
+                <div class="glass p-6 rounded-2xl text-center group hover:bg-pink-900/10 transition border border-pink-500/20"><div class="w-12 h-12 mx-auto bg-pink-500/20 rounded-full flex items-center justify-center text-pink-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-server"></i></div><h4 class="font-bold text-white mb-2 text-sm uppercase">Scalability</h4><p class="text-xs text-slate-400 leading-relaxed">Handle <strong class="text-pink-300">large-scale</strong> high-speed data with minimal intervention.</p></div>
+                <div class="glass p-6 rounded-2xl text-center group hover:bg-pink-900/10 transition border border-pink-500/20"><div class="w-12 h-12 mx-auto bg-pink-500/20 rounded-full flex items-center justify-center text-pink-400 mb-4 group-hover:scale-110 transition"><i class="fas fa-network-wired"></i></div><h4 class="font-bold text-white mb-2 text-sm uppercase">Multi-Source Correlation</h4><p class="text-xs text-slate-400 leading-relaxed">Combine network, logs, and user data to detect <strong class="text-pink-300">complex attacks</strong>.</p></div>
+            </div>
+
+            <!-- FOCUSED OBJECTIVE -->
+            <div class="glass p-8 md:p-12 rounded-[3rem] border border-blue-500/30 bg-blue-900/10 relative overflow-hidden mt-12">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full pointer-events-none"></div>
+                <div class="grid md:grid-cols-3 gap-8 items-center relative z-10">
+                    <div class="md:col-span-1 text-center md:text-right border-b md:border-b-0 md:border-r border-slate-700 pb-6 md:pb-0 md:pr-8">
+                        <span class="text-blue-400 font-bold tracking-widest uppercase text-xs">Focused Objective</span>
+                        <h3 class="text-2xl font-black text-white mt-2 leading-tight">Data-Exfiltration Fingerprinting</h3>
+                        <p class="text-slate-500 text-sm mt-2 italic">(Covert Channels)</p>
+                    </div>
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="flex items-start gap-4"><span class="px-2 py-1 bg-slate-800 rounded text-[10px] font-bold text-slate-300 uppercase mt-1">What</span><p class="text-sm text-slate-300">Detect low-bandwidth, stealthy exfiltration across DNS, HTTP, and timing channels.</p></div>
+                        <div class="flex items-start gap-4"><span class="px-2 py-1 bg-slate-800 rounded text-[10px] font-bold text-slate-300 uppercase mt-1">Why</span><p class="text-sm text-slate-300">Stealth exfil is the hardest to catch; a focused detector reduces risk of silent data loss.</p></div>
+                        <div class="flex items-start gap-4"><span class="px-2 py-1 bg-blue-900/50 text-blue-300 border border-blue-500/30 rounded text-[10px] font-bold uppercase mt-1">Tech</span><p class="text-sm text-blue-100">Combine timing analysis (inter-packet delays), entropy of payloads, and sequence models (LSTM).</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- METHODOLOGY TITLE SLIDE -->
+        <section id="methodology" class="flex flex-col items-center justify-center py-20 border-t border-slate-900/50">
+            <div class="relative mb-10">
+                <div class="absolute inset-0 bg-emerald-500 blur-[60px] opacity-20 rounded-full"></div>
+                <div class="relative z-10 bg-slate-900 p-6 rounded-2xl border border-emerald-500/30">
+                    <i class="fas fa-cogs text-7xl text-emerald-400"></i>
+                </div>
+            </div>
+            <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tight text-center">Proposed <span class="text-emerald-500">Methodology</span></h2>
+        </section>
+
+        <!-- METHODOLOGY PHASE 1 -->
+        <section class="glass p-12 rounded-[3rem] border border-slate-700">
+            <h3 class="text-2xl font-black uppercase tracking-widest text-center mb-16">Phase 1: <span class="text-emerald-400">End-to-End Workflow</span></h3>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 relative">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-700 -z-10"></div>
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-600 w-full md:w-1/4 text-center relative z-10"><div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold">1</div><h4 class="text-white font-bold mb-2">Data Acquisition</h4><p class="text-xs text-slate-400">Packet Sniffing (Scapy) & Log Ingestion.</p></div>
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-600 w-full md:w-1/4 text-center relative z-10"><div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold">2</div><h4 class="text-white font-bold mb-2">Preprocessing</h4><p class="text-xs text-slate-400">Feature Extraction, Cleaning & Vectorization.</p></div>
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-600 w-full md:w-1/4 text-center relative z-10"><div class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold">3</div><h4 class="text-white font-bold mb-2">AI Engine</h4><p class="text-xs text-slate-400">Hybrid Ensemble Analysis.</p></div>
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-600 w-full md:w-1/4 text-center relative z-10"><div class="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold">4</div><h4 class="text-white font-bold mb-2">Response</h4><p class="text-xs text-slate-400">Alert Generation, Dashboard Viz & Block Action.</p></div>
+            </div>
+        </section>
+
+        <!-- METHODOLOGY PHASE 2 -->
+        <section class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h3 class="text-3xl font-bold uppercase tracking-wide border-l-4 border-blue-500 pl-6">Phase 2: <span class="text-blue-400">Data Preprocessing</span></h3>
+                <p class="text-slate-400 leading-relaxed">Raw network traffic is noisy and unstructured. We implement a rigorous pipeline to transform packets into ML-ready feature vectors.</p>
+                <div class="space-y-4">
+                    <div class="glass p-4 rounded-xl border-l-2 border-blue-400 flex items-center gap-4"><i class="fas fa-filter text-blue-400 text-xl"></i><div><h4 class="text-sm font-bold text-white">Data Cleaning</h4><p class="text-xs text-slate-400">Removal of null values, duplicate packets.</p></div></div>
+                    <div class="glass p-4 rounded-xl border-l-2 border-blue-400 flex items-center gap-4"><i class="fas fa-code text-blue-400 text-xl"></i><div><h4 class="text-sm font-bold text-white">Categorical Encoding</h4><p class="text-xs text-slate-400">One-Hot Encoding for protocols.</p></div></div>
+                    <div class="glass p-4 rounded-xl border-l-2 border-blue-400 flex items-center gap-4"><i class="fas fa-balance-scale text-blue-400 text-xl"></i><div><h4 class="text-sm font-bold text-white">Normalization</h4><p class="text-xs text-slate-400">MinMax Scaling to [0,1] range.</p></div></div>
+                </div>
+            </div>
+            <div class="glass p-8 rounded-[2rem] bg-blue-900/10 border border-blue-500/20 relative overflow-hidden">
+                <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+                <div class="font-mono text-xs text-blue-300 space-y-2">
+                    <p><span class="text-pink-400">def</span> <span class="text-yellow-300">preprocess_packet</span>(pkt):</p><p class="pl-4">features = extract_features(pkt)</p><p class="pl-4">cleaned = drop_na(features)</p><p class="pl-4">scaled = scaler.transform(cleaned)</p><p class="pl-4"><span class="text-pink-400">return</span> scaled</p><br><p class="text-slate-500"># Output Vector Shape: (1, 42)</p>
+                    <div class="w-full h-2 bg-slate-700 rounded-full mt-2 overflow-hidden"><div class="h-full bg-blue-500 w-3/4"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- METHODOLOGY PHASE 3 -->
+        <section class="space-y-12">
+            <h3 class="text-3xl font-black uppercase tracking-widest text-center">Phase 3: <span class="gradient-text">Hybrid Model Architecture</span></h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-3xl border-t-4 border-purple-500 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fas fa-tree text-9xl text-purple-500"></i></div>
+                    <h4 class="text-xl font-bold text-white mb-4">Random Forest</h4>
+                    <span class="inline-block px-2 py-1 bg-purple-500/20 text-purple-300 text-[10px] font-bold uppercase rounded mb-4">Signature Detection</span>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Ensemble of decision trees. High accuracy for established threats like DoS.</p>
+                </div>
+                <div class="glass p-8 rounded-3xl border-t-4 border-pink-500 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fas fa-network-wired text-9xl text-pink-500"></i></div>
+                    <h4 class="text-xl font-bold text-white mb-4">Autoencoder</h4>
+                    <span class="inline-block px-2 py-1 bg-pink-500/20 text-pink-300 text-[10px] font-bold uppercase rounded mb-4">Anomaly Detection</span>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Unsupervised Neural Network. Flags high reconstruction errors as zero-day attacks.</p>
+                </div>
+                <div class="glass p-8 rounded-3xl border-t-4 border-orange-500 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fas fa-hourglass-start text-9xl text-orange-500"></i></div>
+                    <h4 class="text-xl font-bold text-white mb-4">LSTM</h4>
+                    <span class="inline-block px-2 py-1 bg-orange-500/20 text-orange-300 text-[10px] font-bold uppercase rounded mb-4">Time-Series</span>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Analyzes sequential data to detect low-and-slow attacks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- METHODOLOGY PHASE 4 -->
+        <section class="glass p-12 rounded-[3rem] border-b-8 border-emerald-500 bg-emerald-900/5">
+            <h3 class="text-2xl font-black uppercase tracking-widest mb-12 text-center">Phase 4: <span class="text-emerald-400">Implementation Stack</span></h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="group"><div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition border border-slate-700"><i class="fab fa-python text-3xl text-yellow-400"></i></div><h5 class="text-white font-bold">Python</h5><p class="text-xs text-slate-500">Core Logic</p></div>
+                <div class="group"><div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition border border-slate-700"><i class="fas fa-brain text-3xl text-orange-400"></i></div><h5 class="text-white font-bold">TensorFlow</h5><p class="text-xs text-slate-500">Model Training</p></div>
+                <div class="group"><div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition border border-slate-700"><i class="fas fa-table text-3xl text-blue-400"></i></div><h5 class="text-white font-bold">Pandas</h5><p class="text-xs text-slate-500">Data Processing</p></div>
+                <div class="group"><div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition border border-slate-700"><i class="fas fa-wifi text-3xl text-emerald-400"></i></div><h5 class="text-white font-bold">Scapy</h5><p class="text-xs text-slate-500">Packet Sniffing</p></div>
+            </div>
+        </section>
+
+        <!-- RESULTS SECTION -->
+        <section id="results" class="glass p-12 rounded-[3.5rem] border-t-4 border-blue-500">
+            <h2 class="text-3xl font-black mb-12 text-center uppercase tracking-tight">Results & <span class="text-blue-500">Analysis</span></h2>
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="h-80"><canvas id="resultsChart"></canvas></div>
+                <div class="space-y-6">
+                    <div class="p-6 rounded-2xl bg-white/5 flex justify-between items-center border border-white/10 shadow-inner">
+                        <span class="text-slate-400 font-bold uppercase text-xs tracking-widest">Accuracy / Performance</span>
+                        <span class="text-blue-400 font-mono font-black text-3xl">92.4%</span>
+                    </div>
+                    <p class="text-slate-500 text-sm italic text-justify leading-relaxed">
+                        Our AIML-based approach demonstrates a significant improvement over traditional signature-based systems. By leveraging hybrid ensemble analysis, we achieved a <strong>92.4% detection rate</strong> with a substantial reduction in false positives for zero-day threats compared to the 70% baseline of legacy systems.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUTCOMES SECTION -->
+        <section id="outcomes" class="space-y-16 py-12 border-t border-slate-900/50">
+            <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tight text-center">Project <span class="text-indigo-500">Outcomes</span></h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Deployment Status (Updated to 45%) -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-yellow-500 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fas fa-hammer text-8xl text-yellow-500"></i></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-yellow-500/20 p-3 rounded-full text-yellow-500"><i class="fas fa-hard-hat text-2xl"></i></div>
+                        <h3 class="text-2xl font-bold text-white">Deployment Status</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="w-full bg-slate-800 rounded-full h-2.5">
+                            <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 45%"></div>
+                        </div>
+                        <p class="text-yellow-400 font-mono text-xs uppercase tracking-widest">Work in Progress (45%)</p>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            The project is currently <strong>partially developed</strong>. The core detection engine is functional, but the full-scale deployment pipeline is still under process. We are currently optimizing the real-time data ingestion layer.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- IPR Strategy -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-slate-500 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fas fa-file-signature text-8xl text-slate-500"></i></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-slate-700/50 p-3 rounded-full text-slate-300"><i class="fas fa-copyright text-2xl"></i></div>
+                        <h3 class="text-2xl font-bold text-white">IPR & Licensing</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Intellectual Property Rights (IPR) and copyright filings are scheduled for the <strong>post-development phase</strong>.
+                    </p>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                        <p class="text-xs text-slate-500 italic">
+                            "Legal documentation and patent drafting will commence immediately following the closure of the active development stage."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Learnings -->
+            <div class="glass p-10 rounded-[3rem] border-t-4 border-blue-500 bg-blue-900/5">
+                <h3 class="text-2xl font-bold text-center uppercase tracking-widest mb-10 text-white">Key <span class="text-blue-400">Learnings</span></h3>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="text-center group"><div class="w-16 h-16 mx-auto bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 transition border border-blue-500/20"><i class="fas fa-network-wired text-2xl"></i></div><h4 class="text-white font-bold text-sm mb-2">Network Traffic</h4><p class="text-xs text-slate-500">Deep understanding of packet structures, TCP/IP protocols, and headers.</p></div>
+                    <div class="text-center group"><div class="w-16 h-16 mx-auto bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition border border-purple-500/20"><i class="fas fa-brain text-2xl"></i></div><h4 class="text-white font-bold text-sm mb-2">ML Optimization</h4><p class="text-xs text-slate-500">Handling imbalanced cybersecurity datasets and tuning Random Forest models.</p></div>
+                    <div class="text-center group"><div class="w-16 h-16 mx-auto bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition border border-emerald-500/20"><i class="fas fa-database text-2xl"></i></div><h4 class="text-white font-bold text-sm mb-2">Data Pipeline</h4><p class="text-xs text-slate-500">Building efficient pipelines for real-time data cleaning and vectorization.</p></div>
+                    <div class="text-center group"><div class="w-16 h-16 mx-auto bg-pink-500/10 rounded-2xl flex items-center justify-center text-pink-400 mb-4 group-hover:scale-110 transition border border-pink-500/20"><i class="fas fa-puzzle-piece text-2xl"></i></div><h4 class="text-white font-bold text-sm mb-2">System Integration</h4><p class="text-xs text-slate-500">Integrating Python backend logic with a frontend dashboard for alerts.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REFERENCES SECTION (New) -->
+        <section id="references" class="py-20 border-t border-slate-900/50">
+            <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tight text-center mb-16">Refe<span class="text-pink-500">rences</span></h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Ref 1 -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-pink-500 relative group overflow-hidden hover:bg-white/5 transition">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 shrink-0"><i class="fas fa-robot text-2xl"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-2 leading-tight">Artificial Intelligence-Based Anomaly Detection for Industry 4.0</h3>
+                            <p class="text-sm text-slate-400 italic">By R. Ravinder Reddy, T. Sridevi</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ref 2 -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-purple-500 relative group overflow-hidden hover:bg-white/5 transition">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-purple-500/20 p-3 rounded-xl text-purple-400 shrink-0"><i class="fas fa-desktop text-2xl"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-2 leading-tight">Next-Generation Intrusion Detection: Navigating Challenges and Embracing AI</h3>
+                            <p class="text-sm text-slate-400 italic">By Mani Shivhare, Saru Dhir</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ref 3 -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-indigo-500 relative group overflow-hidden hover:bg-white/5 transition">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-indigo-500/20 p-3 rounded-xl text-indigo-400 shrink-0"><i class="fas fa-user-shield text-2xl"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-2 leading-tight">Artificial Intelligence Based Intrusion Detection Systems</h3>
+                            <p class="text-sm text-slate-400 italic">By Vignesh Reddy, Sunitha R</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ref 4 -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-blue-500 relative group overflow-hidden hover:bg-white/5 transition">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-blue-500/20 p-3 rounded-xl text-blue-400 shrink-0"><i class="fas fa-thumbs-up text-2xl"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-2 leading-tight">Detecting stealthy attacks: Efficient monitoring of suspicious activities on computer networks</h3>
+                            <p class="text-sm text-slate-400 italic">By Harsha K. Kalutarage, Siraj A. Shaikh</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THANK YOU SECTION (New) -->
+        <section class="min-h-[50vh] flex flex-col items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-blue-900/10 blur-[100px] rounded-full pointer-events-none"></div>
+            <div class="glass p-16 rounded-[4rem] text-center border-t-4 border-blue-500 relative z-10 w-full max-w-4xl">
+                 <i class="fas fa-check-circle text-8xl text-blue-500 mb-8 animate-pulse"></i>
+                 <h2 class="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter mb-4">Thank <span class="gradient-text">You</span></h2>
+                 <p class="text-slate-400 text-xl font-mono tracking-widest uppercase mb-12">Any Questions?</p>
+                 <div class="inline-block px-8 py-3 rounded-full border border-slate-700 bg-slate-900/50 text-slate-300 text-sm font-bold">
+                     OPEN FOR DISCUSSION
+                 </div>
+            </div>
+        </section>
+
+        <section id="team" class="text-center pt-20 border-t border-slate-900">
+            <h2 class="text-[10px] font-black text-slate-600 uppercase tracking-[0.5em] mb-12">Academic Credits</h2>
+            <div class="flex flex-wrap justify-center gap-10">
+                <div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-blue-600">
+                    <p class="text-[9px] font-bold text-blue-500 mb-2 uppercase tracking-widest">Project Guide</p>
+                    <p class="font-black text-xl text-slate-100">Dr. Rajat Goel</p>
+                </div>
+                <div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-slate-700">
+                    <p class="text-[9px] font-bold text-slate-400 mb-2 uppercase tracking-widest">Team Member 1</p>
+                    <p class="font-black text-xl text-slate-100">Dhruv Chanda</p>
+                    <p class="text-[10px] text-slate-500 mt-1">2427030723</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-12 text-center bg-black/40 border-t border-slate-900">
+        <p class="text-slate-600 text-[10px] font-bold tracking-[0.3em] uppercase mb-2">Manipal University Jaipur</p>
+        <p class="text-slate-500 text-[9px] font-medium tracking-[0.2em] uppercase opacity-50">Department of Computer Science & Engineering • 2026</p>
+    </footer>
+
+    <script>
+        // TIMER LOGIC
+        let sec = 0;
+        let timer = null;
+        function startTimer() {
+            timer = setInterval(() => {
+                sec++;
+                let m = Math.floor(sec / 60);
+                let s = sec % 60;
+                document.getElementById('displayTime').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                
+                if (sec >= 480 && sec < 600) { // 8-10 Mins Warning
+                    document.getElementById('timerContainer').classList.add('timer-warning');
+                    document.getElementById('timerIcon').classList.replace('fa-hourglass-start', 'fa-hourglass-half');
+                } else if (sec >= 600) { // 10 Mins Stop
+                    clearInterval(timer);
+                    document.getElementById('timerContainer').classList.replace('timer-warning', 'timer-stop');
+                    document.getElementById('displayTime').innerText = "10:00";
+                    document.getElementById('timerIcon').classList.replace('fa-hourglass-half', 'fa-hourglass-end');
+                }
+            }, 1000);
+        }
+        
+        // Start Timer Immediately
+        startTimer();
+
+        // RESULTS CHART
+        const ctx = document.getElementById('resultsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Traditional IDS', 'Our AIML Solution'],
+                datasets: [{
+                    data: [70, 92.4],
+                    backgroundColor: ['#1e293b', '#3b82f6'],
+                    borderRadius: 15,
+                    barThickness: 50
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { beginAtZero: true, grid: { color: '#ffffff05' }, ticks: { color: '#475569' } },
+                    x: { grid: { display: false }, ticks: { color: '#475569' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
